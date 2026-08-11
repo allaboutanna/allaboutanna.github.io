@@ -1,0 +1,193 @@
+---
+import { getCollection, render } from 'astro:content';
+import ModulePanel from '../components/ModulePanel.astro';
+import { site } from '../site.config';
+import '../styles/global.css';
+
+const rawEntries = await getCollection('entries', ({ data }) =>
+  import.meta.env.PROD ? data.draft !== true : true
+);
+
+const entries = rawEntries.sort((a, b) => {
+  if (a.data.featured !== b.data.featured) return a.data.featured ? -1 : 1;
+  if (a.data.order !== b.data.order) return a.data.order - b.data.order;
+  return b.data.date.valueOf() - a.data.date.valueOf();
+});
+
+const moduleMap = {
+  academic: entries.filter((entry) => entry.data.module === 'academic'),
+  research: entries.filter((entry) => entry.data.module === 'research'),
+  projects: entries.filter((entry) => entry.data.module === 'projects'),
+  reading: entries.filter((entry) => entry.data.module === 'reading'),
+  about: entries.filter((entry) => entry.data.module === 'about'),
+};
+
+const moduleTitles = {
+  academic: 'ACADEMIC THINKING',
+  research: 'RESEARCH PROGRESS',
+  projects: 'PROJECTS',
+  reading: 'READING',
+  about: 'ABOUT',
+};
+
+const allTags = Array.from(
+  new Set(entries.flatMap((entry) => entry.data.tags))
+).sort((a, b) => a.localeCompare(b));
+
+const renderedEntries = await Promise.all(
+  entries.map(async (entry) => {
+    const rendered = await render(entry);
+    return { entry, Content: rendered.Content };
+  })
+);
+
+const dateText = (date: Date) =>
+  new Intl.DateTimeFormat('en', {
+    day: '2-digit',
+    month: 'long',
+    year: 'numeric'
+  }).format(date);
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta
+      name="description"
+      content={site.tagline}
+    />
+    <title>{site.name}</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>·</text></svg>">
+  </head>
+
+  <body>
+    <main class="site-shell">
+      <header class="site-intro">
+        <div>
+          <p class="eyebrow">PERSONAL ARCHIVE</p>
+          <h1>{site.name}</h1>
+        </div>
+        <p class="tagline">{site.tagline}</p>
+      </header>
+
+      <section class="filter-strip" aria-label="Filter by tag">
+        <button class="filter-chip is-active" type="button" data-tag-filter="all">All</button>
+        {allTags.map((tag) => (
+          <button
+            class="filter-chip"
+            type="button"
+            data-tag-filter={tag.toLowerCase()}
+          >
+            #{tag}
+          </button>
+        ))}
+      </section>
+
+      <section class="dashboard">
+        <ModulePanel
+          title={moduleTitles.academic}
+          moduleKey="academic"
+          entries={moduleMap.academic}
+          className="panel-academic"
+        />
+        <ModulePanel
+          title={moduleTitles.research}
+          moduleKey="research"
+          entries={moduleMap.research}
+          className="panel-research"
+        />
+        <ModulePanel
+          title={moduleTitles.projects}
+          moduleKey="projects"
+          entries={moduleMap.projects}
+          className="panel-projects"
+        />
+        <ModulePanel
+          title={moduleTitles.reading}
+          moduleKey="reading"
+          entries={moduleMap.reading}
+          className="panel-reading"
+        />
+        <ModulePanel
+          title={moduleTitles.about}
+          moduleKey="about"
+          entries={moduleMap.about}
+          className="panel-about"
+        />
+      </section>
+
+      <footer class="site-footer">
+        <span>{site.footer}</span>
+        <span>© {new Date().getFullYear()}</span>
+      </footer>
+    </main>
+
+    {Object.entries(moduleMap).map(([key, moduleEntries]) => (
+      <dialog class="module-dialog" data-module-dialog={key}>
+        <div class="dialog-frame">
+          <div class="dialog-head">
+            <div>
+              <p class="eyebrow">MODULE</p>
+              <h2>{moduleTitles[key as keyof typeof moduleTitles]}</h2>
+            </div>
+            <button type="button" class="close-button" data-close-dialog aria-label="Close">×</button>
+          </div>
+
+          <div class="dialog-list">
+            {moduleEntries.map((entry) => (
+              <button
+                class="dialog-entry"
+                type="button"
+                data-open-entry={entry.id}
+                data-tags={entry.data.tags.map((tag) => tag.toLowerCase()).join('|')}
+              >
+                <div>
+                  <span class="dialog-date">{dateText(entry.data.date)}</span>
+                  <h3>{entry.data.title}</h3>
+                  <p>{entry.data.summary}</p>
+                </div>
+                <span class="dialog-arrow">→</span>
+              </button>
+            ))}
+          </div>
+        </div>
+      </dialog>
+    ))}
+
+    {renderedEntries.map(({ entry, Content }) => (
+      <dialog class="entry-dialog" data-entry-dialog={entry.id}>
+        <article class="article-frame">
+          <button type="button" class="close-button article-close" data-close-dialog aria-label="Close">×</button>
+
+          <header class="article-head">
+            <p class="eyebrow">{moduleTitles[entry.data.module]}</p>
+            <h2>{entry.data.title}</h2>
+            <p class="article-summary">{entry.data.summary}</p>
+
+            <div class="article-meta">
+              <span>{dateText(entry.data.date)}</span>
+              {entry.data.updated && <span>Updated {dateText(entry.data.updated)}</span>}
+              {entry.data.status && <span>{entry.data.status}</span>}
+            </div>
+
+            {entry.data.tags.length > 0 && (
+              <div class="tag-row article-tags">
+                {entry.data.tags.map((tag) => <span class="tag">#{tag}</span>)}
+              </div>
+            )}
+          </header>
+
+          <div class="prose">
+            <Content />
+          </div>
+        </article>
+      </dialog>
+    ))}
+
+    <script>
+      import '../scripts/site.js';
+    </script>
+  </body>
+</html>

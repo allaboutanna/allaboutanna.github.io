@@ -1,0 +1,58 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  title: string;
+  moduleKey: string;
+  entries: CollectionEntry<'entries'>[];
+  className?: string;
+}
+
+const { title, moduleKey, entries, className = '' } = Astro.props;
+
+const dateText = (date: Date) =>
+  new Intl.DateTimeFormat('en', {
+    day: '2-digit',
+    month: 'short',
+    year: 'numeric'
+  }).format(date);
+---
+
+<section class={`module-panel ${className}`} data-module-panel={moduleKey}>
+  <div class="module-head">
+    <h2>{title}</h2>
+    <span class="module-count">{entries.length.toString().padStart(2, '0')}</span>
+  </div>
+
+  <div class="module-stream">
+    {entries.map((entry) => (
+      <button
+        class="entry-preview"
+        type="button"
+        data-open-entry={entry.id}
+        data-tags={entry.data.tags.map((tag) => tag.toLowerCase()).join('|')}
+      >
+        <div class="entry-meta">
+          <time datetime={entry.data.date.toISOString()}>{dateText(entry.data.date)}</time>
+          {entry.data.status && <span>{entry.data.status}</span>}
+        </div>
+        <h3>{entry.data.title}</h3>
+        <p>{entry.data.summary}</p>
+
+        {entry.data.tags.length > 0 && (
+          <div class="tag-row" aria-label="Tags">
+            {entry.data.tags.slice(0, 4).map((tag) => (
+              <span class="tag">#{tag}</span>
+            ))}
+          </div>
+        )}
+      </button>
+    ))}
+  </div>
+
+  <div class="fade-edge" aria-hidden="true"></div>
+
+  <button class="more-button" type="button" data-open-module={moduleKey}>
+    More <span aria-hidden="true">↗</span>
+  </button>
+</section>

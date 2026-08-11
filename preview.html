@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Modular Personal Site Preview</title>
+<style>
+:root{--bg:#f3f1ec;--paper:#fbfaf7;--ink:#161616;--muted:#74716b;--line:rgba(22,22,22,.14)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Arial,Helvetica,sans-serif}
+main{width:min(calc(100% - 40px),1420px);margin:auto;padding:58px 0}
+header{display:grid;grid-template-columns:1fr minmax(280px,620px);gap:40px;align-items:end;border-bottom:1px solid var(--line);padding:0 4px 34px}
+.eyebrow{font-size:11px;letter-spacing:.16em;color:var(--muted);font-weight:700;margin:0 0 10px}
+h1{font-size:clamp(40px,5vw,76px);letter-spacing:-.055em;line-height:.95;margin:0;font-weight:600}
+.tagline{font:clamp(18px,2vw,28px)/1.28 Georgia,serif;margin:0}
+.filters{display:flex;gap:8px;overflow:auto;padding:18px 4px 20px}.filters button{border:1px solid var(--line);background:#ffffff55;border-radius:999px;padding:8px 12px;font-size:12px}.filters .active{background:var(--ink);color:white}
+.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px}
+.panel{position:relative;overflow:hidden;border:1px solid var(--line);border-radius:26px;background:var(--paper);padding:24px;min-height:300px}
+.academic{grid-column:1/span 7;grid-row:span 2;min-height:650px}.research{grid-column:8/span 5;min-height:315px}.projects{grid-column:8/span 5;min-height:315px}.reading{grid-column:1/span 8;min-height:400px}.about{grid-column:9/span 4;min-height:400px}
+.head{display:flex;justify-content:space-between;border-bottom:1px solid var(--line);padding-bottom:15px}.head h2{margin:0;font-size:24px;letter-spacing:-.03em}.head span{font-size:12px;color:var(--muted)}
+.item{border-bottom:1px solid #11111112;padding:17px 0}.meta{font-size:11px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase}.item h3{font:400 26px/1.12 Georgia,serif;letter-spacing:-.02em;margin:7px 0}.item p{color:#5c5954;font-size:13px;line-height:1.55;margin:0}.tags{font-size:10px;color:var(--muted);margin-top:10px}
+.fade{position:absolute;left:0;right:0;bottom:0;height:120px;background:linear-gradient(transparent,var(--paper) 62%)}.more{position:absolute;right:22px;bottom:18px;border:0;background:transparent;font-weight:700;z-index:2}
+@media(max-width:900px){header{grid-template-columns:1fr}.grid{grid-template-columns:1fr}.academic,.research,.projects,.reading,.about{grid-column:auto;grid-row:auto;min-height:390px}.academic{min-height:560px}}
+</style>
+</head>
+<body>
+<main>
+<header><div><p class="eyebrow">PERSONAL ARCHIVE</p><h1>YOUR NAME</h1></div><p class="tagline">A personal space for unfinished thoughts, ongoing research, projects and reading.</p></header>
+<div class="filters"><button class="active">All</button><button>#methodology</button><button>#political-communication</button><button>#QKD</button><button>#philosophy</button><button>#reading</button></div>
+<section class="grid">
+<div class="panel academic"><div class="head"><h2>ACADEMIC THINKING</h2><span>04</span></div>
+<div class="item"><div class="meta">11 Aug 2026</div><h3>Why media repertoires matter</h3><p>A note on why combinations of media use may tell us more than isolated exposure measures.</p><div class="tags">#media &nbsp; #political-communication &nbsp; #methodology</div></div>
+<div class="item"><div class="meta">08 Aug 2026</div><h3>What makes a research question worth keeping?</h3><p>A reflection on questions that survive after the first attractive result disappears.</p></div>
+<div class="item"><div class="meta">03 Aug 2026</div><h3>Null results can sharpen an argument</h3><p>Non-significance is sometimes a boundary condition, not an absence of knowledge.</p></div><div class="fade"></div><button class="more">More ↗</button></div>
+<div class="panel research"><div class="head"><h2>RESEARCH PROGRESS</h2><span>02</span></div>
+<div class="item"><div class="meta">Writing</div><h3>Media repertoires & corruption perceptions</h3><p>Tightening the literature review and clarifying digital embeddedness.</p></div>
+<div class="item"><div class="meta">Revision</div><h3>QKD information-reconciliation leakage</h3><p>Tighter leakage estimation with experimental validation.</p></div><div class="fade"></div><button class="more">More ↗</button></div>
+<div class="panel projects"><div class="head"><h2>PROJECTS</h2><span>02</span></div>
+<div class="item"><div class="meta">Active</div><h3>Quantum Optics course</h3><p>Lecture structure, teaching notes and visual materials.</p></div>
+<div class="item"><div class="meta">Building</div><h3>This website</h3><p>A modular one-page archive.</p></div><div class="fade"></div><button class="more">More ↗</button></div>
+<div class="panel reading"><div class="head"><h2>READING</h2><span>03</span></div>
+<div class="item"><div class="meta">Reading</div><h3>Sartre — Existentialism Is a Humanism</h3><p>Freedom, responsibility and interpretation.</p><div class="tags">#philosophy &nbsp; #existentialism</div></div>
+<div class="item"><div class="meta">Finished</div><h3>Prior — Post-Broadcast Democracy</h3><p>Media choice, audience heterogeneity and political consequences.</p></div><div class="fade"></div><button class="more">More ↗</button></div>
+<div class="panel about"><div class="head"><h2>ABOUT</h2><span>01</span></div>
+<div class="item"><div class="meta">About this space</div><h3>A quiet, evolving personal archive.</h3><p>For work in progress, reading notes, research fragments and ideas that may never become formal outputs.</p></div><div class="fade"></div><button class="more">More ↗</button></div>
+</section>
+</main>
+</body>
+</html>
