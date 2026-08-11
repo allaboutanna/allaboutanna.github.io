@@ -15,17 +15,19 @@ const entries = rawEntries.sort((a, b) => {
 
 const moduleMap = {
   academic: entries.filter((entry) => entry.data.module === 'academic'),
-  research: entries.filter((entry) => entry.data.module === 'research'),
+  yearly: entries.filter((entry) => entry.data.module === 'yearly'),
   projects: entries.filter((entry) => entry.data.module === 'projects'),
   reading: entries.filter((entry) => entry.data.module === 'reading'),
+  research: entries.filter((entry) => entry.data.module === 'research'),
   about: entries.filter((entry) => entry.data.module === 'about'),
 };
 
 const moduleTitles = {
   academic: 'ACADEMIC THINKING',
-  research: 'DIARY',
+  yearly: 'YEARLY PLAN',
   projects: 'PROJECTS',
-  reading: 'READING NOTES',
+  reading: 'READING',
+  research: 'DIARY',
   about: 'ABOUT',
 };
 
@@ -86,37 +88,51 @@ const dateText = (date: Date) =>
       </section>
 
       <section class="dashboard">
-        <ModulePanel
-          title={moduleTitles.academic}
-          moduleKey="academic"
-          entries={moduleMap.academic}
-          className="panel-academic"
-        />
-        <ModulePanel
-          title={moduleTitles.research}
-          moduleKey="research"
-          entries={moduleMap.research}
-          className="panel-research"
-        />
-        <ModulePanel
-          title={moduleTitles.projects}
-          moduleKey="projects"
-          entries={moduleMap.projects}
-          className="panel-projects"
-        />
-        <ModulePanel
-          title={moduleTitles.reading}
-          moduleKey="reading"
-          entries={moduleMap.reading}
-          className="panel-reading"
-        />
-        <ModulePanel
-          title={moduleTitles.about}
-          moduleKey="about"
-          entries={moduleMap.about}
-          className="panel-about"
-        />
-      </section>
+       <section class="dashboard">
+
+  <ModulePanel
+    title={moduleTitles.academic}
+    moduleKey="academic"
+    entries={moduleMap.academic}
+    className="panel-academic"
+  />
+
+  <ModulePanel
+    title={moduleTitles.yearly}
+    moduleKey="yearly"
+    entries={moduleMap.yearly}
+    className="panel-yearly"
+  />
+
+  <ModulePanel
+    title={moduleTitles.projects}
+    moduleKey="projects"
+    entries={moduleMap.projects}
+    className="panel-projects"
+  />
+
+  <ModulePanel
+    title={moduleTitles.reading}
+    moduleKey="reading"
+    entries={moduleMap.reading}
+    className="panel-reading"
+  />
+
+  <ModulePanel
+    title={moduleTitles.research}
+    moduleKey="research"
+    entries={moduleMap.research}
+    className="panel-research"
+  />
+
+  <ModulePanel
+    title={moduleTitles.about}
+    moduleKey="about"
+    entries={moduleMap.about}
+    className="panel-about"
+  />
+
+</section>
 
       <footer class="site-footer">
         <span>{site.footer}</span>
