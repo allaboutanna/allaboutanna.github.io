@@ -296,6 +296,85 @@ content:
           format: markdown
           switcher: true
 
+  - name: yearly
+    label: Yearly Plan
+    type: collection
+    path: src/content/entries/yearly
+    format: yaml-frontmatter
+    subfolders: false
+    filename: "{year}-{month}-{day}-{title}.md"
+    view:
+      fields: [title, status, date, updated, tags, draft]
+      primary: title
+      sort: [date, title]
+      search: [title, summary, status, tags, body]
+      default:
+        sort: date
+        order: desc
+    fields:
+      - name: title
+        label: Title
+        type: string
+        required: true
+
+      - name: module
+        label: false
+        type: string
+        hidden: true
+        default: yearly
+
+      - name: date
+        label: Date
+        type: date
+        required: true
+        options:
+          format: yyyy-MM-dd
+
+      - name: updated
+        label: Last updated
+        type: date
+        default: ""
+        options:
+          format: yyyy-MM-dd
+
+      - name: summary
+        label: Summary
+        type: text
+        required: true
+
+      - name: tags
+        label: Tags
+        type: string
+        list: true
+
+      - name: status
+        label: Status
+        type: string
+        description: e.g. Planned, In progress, Completed.
+
+      - name: featured
+        label: Featured
+        type: boolean
+        default: false
+
+      - name: order
+        label: Manual order
+        type: number
+        default: 0
+
+      - name: draft
+        label: Draft
+        type: boolean
+        default: false
+
+      - name: body
+        label: Plan details
+        type: rich-text
+        required: true
+        options:
+          format: markdown
+          switcher: true
+          
   - name: about
     label: About
     type: file
