@@ -30,6 +30,11 @@ button, input, textarea { font: inherit; }
 
 button { color: inherit; }
 
+.site-shell {
+  width: min(calc(100% - 96px), var(--max));
+  margin: 0 auto;
+  padding: 88px 0 72px;
+}
 .site-intro {
   display: grid;
   grid-template-columns: 1fr minmax(280px, 620px);
@@ -260,7 +265,7 @@ button { color: inherit; }
   display: flex;
   justify-content: space-between;
   gap: 20px;
-  padding: 26px 4px 0;
+  padding: 30px 30px 28px;
   color: var(--muted);
   font-size: 11px;
   letter-spacing: .04em;
