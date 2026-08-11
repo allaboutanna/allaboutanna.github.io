@@ -6,7 +6,7 @@
   --line: rgba(22, 22, 22, 0.14);
   --soft-line: rgba(22, 22, 22, 0.08);
   --radius: 26px;
-  --max: 1420px;
+  --max: 1220px;
 }
 
 * { box-sizing: border-box; }
@@ -29,12 +29,6 @@ body {
 button, input, textarea { font: inherit; }
 
 button { color: inherit; }
-
-.site-shell {
-  width: min(calc(100% - 40px), var(--max));
-  margin: 0 auto;
-  padding: 54px 0 48px;
-}
 
 .site-intro {
   display: grid;
@@ -103,7 +97,7 @@ button { color: inherit; }
 .dashboard {
   display: grid;
   grid-template-columns: repeat(12, minmax(0, 1fr));
-  gap: 16px;
+  gap: 26px;
 }
 
 .module-panel {
