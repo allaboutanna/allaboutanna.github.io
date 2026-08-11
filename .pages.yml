@@ -90,7 +90,7 @@ content:
           switcher: true
 
   - name: research
-    label: Research Progress
+    label: Diary
     type: collection
     path: src/content/entries/research
     format: yaml-frontmatter
