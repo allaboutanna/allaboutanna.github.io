@@ -1,0 +1,352 @@
+media:
+  input: public/uploads
+  output: /uploads
+  rename: safe
+  extensions: [png, jpg, jpeg, webp, gif]
+
+settings:
+  content:
+    merge: true
+  commit:
+    identity: app
+    templates:
+      create: "content: create {path}"
+      update: "content: update {path}"
+      delete: "content: delete {path}"
+      rename: "content: rename {oldPath} -> {newPath}"
+
+content:
+  - name: academic
+    label: Academic Thinking
+    type: collection
+    path: src/content/entries/academic
+    format: yaml-frontmatter
+    subfolders: false
+    filename: "{year}-{month}-{day}-{title}.md"
+    view:
+      fields: [title, date, updated, tags, draft]
+      primary: title
+      sort: [date, title]
+      search: [title, summary, tags, body]
+      default:
+        sort: date
+        order: desc
+    fields:
+      - name: title
+        label: Title
+        type: string
+        required: true
+      - name: module
+        label: false
+        type: string
+        hidden: true
+        default: academic
+      - name: date
+        label: Published date
+        type: date
+        required: true
+        options:
+          format: yyyy-MM-dd
+      - name: updated
+        label: Last updated
+        type: date
+        default: ""
+        options:
+          format: yyyy-MM-dd
+      - name: summary
+        label: Homepage summary
+        type: text
+        required: true
+        description: One or two sentences shown in the Academic Thinking module.
+      - name: tags
+        label: Tags
+        type: string
+        list: true
+        description: Add any tags you want; they work across all modules.
+      - name: status
+        label: Status
+        type: string
+        description: Optional, e.g. Note, Essay, Developing.
+      - name: featured
+        label: Featured
+        type: boolean
+        default: false
+      - name: order
+        label: Manual order
+        type: number
+        default: 0
+        description: Lower numbers appear earlier when other priority rules match.
+      - name: draft
+        label: Draft
+        type: boolean
+        default: false
+        description: Draft entries are visible locally but excluded from the published build.
+      - name: body
+        label: Content
+        type: rich-text
+        required: true
+        options:
+          format: markdown
+          switcher: true
+
+  - name: research
+    label: Research Progress
+    type: collection
+    path: src/content/entries/research
+    format: yaml-frontmatter
+    subfolders: false
+    filename: "{year}-{month}-{day}-{title}.md"
+    view:
+      fields: [title, status, date, updated, tags, draft]
+      primary: title
+      sort: [date, title]
+      search: [title, summary, status, tags, body]
+      default:
+        sort: date
+        order: desc
+    fields:
+      - name: title
+        label: Title
+        type: string
+        required: true
+      - name: module
+        label: false
+        type: string
+        hidden: true
+        default: research
+      - name: date
+        label: Started / published date
+        type: date
+        required: true
+        options:
+          format: yyyy-MM-dd
+      - name: updated
+        label: Last updated
+        type: date
+        default: ""
+        options:
+          format: yyyy-MM-dd
+      - name: summary
+        label: Progress summary
+        type: text
+        required: true
+      - name: tags
+        label: Tags
+        type: string
+        list: true
+      - name: status
+        label: Status
+        type: string
+        description: e.g. Idea, Analysis, Writing, Revision, Submitted.
+      - name: featured
+        label: Featured
+        type: boolean
+        default: false
+      - name: order
+        label: Manual order
+        type: number
+        default: 0
+      - name: draft
+        label: Draft
+        type: boolean
+        default: false
+      - name: body
+        label: Detailed progress
+        type: rich-text
+        required: true
+        options:
+          format: markdown
+          switcher: true
+
+  - name: projects
+    label: Projects
+    type: collection
+    path: src/content/entries/projects
+    format: yaml-frontmatter
+    subfolders: false
+    filename: "{year}-{month}-{day}-{title}.md"
+    view:
+      fields: [title, status, date, tags, draft]
+      primary: title
+      sort: [date, title]
+      search: [title, summary, status, tags, body]
+      default:
+        sort: date
+        order: desc
+    fields:
+      - name: title
+        label: Project title
+        type: string
+        required: true
+      - name: module
+        label: false
+        type: string
+        hidden: true
+        default: projects
+      - name: date
+        label: Date
+        type: date
+        required: true
+        options:
+          format: yyyy-MM-dd
+      - name: updated
+        label: Last updated
+        type: date
+        default: ""
+        options:
+          format: yyyy-MM-dd
+      - name: summary
+        label: Project summary
+        type: text
+        required: true
+      - name: tags
+        label: Tags
+        type: string
+        list: true
+      - name: status
+        label: Status
+        type: string
+        description: e.g. Building, Active, Paused, Completed.
+      - name: featured
+        label: Featured
+        type: boolean
+        default: false
+      - name: order
+        label: Manual order
+        type: number
+        default: 0
+      - name: draft
+        label: Draft
+        type: boolean
+        default: false
+      - name: body
+        label: Project details
+        type: rich-text
+        required: true
+        options:
+          format: markdown
+          switcher: true
+
+  - name: reading
+    label: Reading
+    type: collection
+    path: src/content/entries/reading
+    format: yaml-frontmatter
+    subfolders: false
+    filename: "{year}-{month}-{day}-{title}.md"
+    view:
+      fields: [title, status, date, tags, draft]
+      primary: title
+      sort: [date, title]
+      search: [title, summary, status, tags, body]
+      default:
+        sort: date
+        order: desc
+    fields:
+      - name: title
+        label: Book / paper / text
+        type: string
+        required: true
+      - name: module
+        label: false
+        type: string
+        hidden: true
+        default: reading
+      - name: date
+        label: Note date
+        type: date
+        required: true
+        options:
+          format: yyyy-MM-dd
+      - name: updated
+        label: Last updated
+        type: date
+        default: ""
+        options:
+          format: yyyy-MM-dd
+      - name: summary
+        label: Reading note summary
+        type: text
+        required: true
+      - name: tags
+        label: Tags
+        type: string
+        list: true
+      - name: status
+        label: Reading status
+        type: string
+        description: e.g. Reading, Finished, Re-reading, On hold.
+      - name: featured
+        label: Featured
+        type: boolean
+        default: false
+      - name: order
+        label: Manual order
+        type: number
+        default: 0
+      - name: draft
+        label: Draft
+        type: boolean
+        default: false
+      - name: body
+        label: Reading notes
+        type: rich-text
+        required: true
+        options:
+          format: markdown
+          switcher: true
+
+  - name: about
+    label: About
+    type: file
+    path: src/content/entries/about/about.md
+    format: yaml-frontmatter
+    fields:
+      - name: title
+        label: Title
+        type: string
+        required: true
+      - name: module
+        label: false
+        type: string
+        hidden: true
+        default: about
+      - name: date
+        label: Date
+        type: date
+        required: true
+        options:
+          format: yyyy-MM-dd
+      - name: updated
+        label: Last updated
+        type: date
+        default: ""
+        options:
+          format: yyyy-MM-dd
+      - name: summary
+        label: Homepage summary
+        type: text
+        required: true
+      - name: tags
+        label: Tags
+        type: string
+        list: true
+      - name: featured
+        label: Featured
+        type: boolean
+        default: true
+      - name: order
+        label: Manual order
+        type: number
+        default: 0
+      - name: draft
+        label: Draft
+        type: boolean
+        default: false
+      - name: body
+        label: About content
+        type: rich-text
+        required: true
+        options:
+          format: markdown
+          switcher: true
