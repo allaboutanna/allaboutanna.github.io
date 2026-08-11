@@ -12,16 +12,33 @@ const entries = defineCollection({
     base: './src/content/entries',
     pattern: '**/*.md'
   }),
+
   schema: z.object({
     title: z.string(),
-    module: z.enum(['academic', 'research', 'projects', 'reading', 'about']),
+
+    module: z.enum([
+      'academic',
+      'yearly',
+      'projects',
+      'reading',
+      'research',
+      'about'
+    ]),
+
     date: z.coerce.date(),
+
     updated: optionalDate,
+
     summary: z.string(),
+
     tags: z.array(z.string()).default([]),
+
     status: z.string().optional(),
+
     featured: z.boolean().default(false),
+
     order: z.number().default(0),
+
     draft: z.boolean().default(false)
   })
 });
